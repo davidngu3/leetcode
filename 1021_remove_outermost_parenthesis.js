@@ -18,26 +18,23 @@
  */
 var removeOuterParentheses = function(S) {
     let answerString = "";
-    
-    let startPointer = 0; // variables to point to the beginning and end of primitive parentheses strings
-    let endPointer = 1;
+    let startIndex = 0;
+    let parity = -1; // let negative parity denote open parentheses, and positive parity denote closed parenthses
 
-    var L = 1; // variables to count the number of opening "(" and closing ")" parentheses; string always starts with opening parenthesis
-    var R = 0;
-
-    while (endPointer < S.length) { 
-        if (S[endPointer] == "(") {
-            L++;
+    for (let i = 1; i < S.length; i++) {  
+        if (S[i] == "(") {
+            parity--;
         }
         else {
-            R++;
+            parity++;
         }
-        if (L == R && L > 0) { // once left/right parentheses count matches, i.e. primitive parentheses string found
-            answerString += S.substring(startPointer + 1, endPointer); // add it to the output string without the outer parentheses
-            startPointer = endPointer + 1; // relocate the starting index to the start of the next primitive parentheses string
+
+        if (parity == 0) { // when parity equates to 0 we have found a new primitive string
+            answerString += S.substring(startIndex + 1, i); // add it to the output string without the outer parentheses
+            startIndex = i + 1; // relocate the starting index to the start of the next primitive string
         }
-        endPointer++; 
     }
+
     return answerString;
 };
 
