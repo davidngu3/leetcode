@@ -21,6 +21,9 @@ var searchBST = function(root, val) {
 };
 
 function search(node, target) {
+    if (!node) {
+        return null;
+    }
     if (node.val == target) {
         return node;
     }
