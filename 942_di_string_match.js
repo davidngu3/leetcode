@@ -7,28 +7,18 @@
 var diStringMatch = function(S) { 
     let output = [];
     
-    let dcount = 0;
-    for (let i=0; i<S.length; i++) {
-        if (S[i] == "D") {
-            dcount++;
-        }
-    }
+    let lo = 0;
+    let hi = S.length;
     
-    let scount = dcount + 1;
-    
-    output.push(dcount);
-    dcount--;
-    
-    for (let i=0; i<S.length; i++) {
+    for (let i=0; i<S.length+1; i++) {
         if (S[i] == "I") {
-            output.push(scount);
-            scount++;
+            output.push(lo);
+            lo++;
         }
         else {
-            output.push(dcount);
-            dcount--;
+            output.push(hi);
+            hi--
         }
     }
-    
     return output;
 };
