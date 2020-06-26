@@ -12,31 +12,18 @@
 var hammingDistance = function(x, y) {
     var difference = 0;
 
-    // convert to binary
-    var xdec = x.toString(2);
-    var ydec = y.toString(2);
-
-    // append 0s to front of the shorter integer so that the digits match up for iteration
-    var longer;
-    var shorter;
-    if (xdec.length > ydec.length) {
-        longer = xdec;
-        shorter = ydec;
-    }
-    else {
-        longer = ydec;
-        shorter = xdec;
-    }
-    while (longer.length > shorter.length) {
-        shorter = "0" + shorter;
-    }
-
-    // compare bits
-    for (let i=0; i<shorter.length; i++) {
-        if (shorter[i] !== longer[i]) {
-            difference++;
+    // obtain the XOR value; the sum of 1 bits in this will be the answer
+    var xor = x ^ y;
+    
+    // to get that sum, we simply bitwise right shift the number until 0, incrementing the counter if the rightmost bit is 1
+    while (xor != 0) {
+        if (xor & 1) {
+            ++difference;
         }
+        xor = xor >> 1;
     }
-
+    
     return difference;
 };
+
+
