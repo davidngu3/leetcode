@@ -16,7 +16,7 @@ var hammingDistance = function(x, y) {
     var xor = x ^ y;
     
     // to get that sum, we simply bitwise right shift the number until 0, incrementing the counter if the rightmost bit is 1
-    while (xor != 0) {
+    while (xor != 0) {y
         if (xor & 1) {
             ++difference;
         }
