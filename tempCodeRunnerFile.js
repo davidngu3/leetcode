@@ -1,1 +1,1 @@
-coords[1] + 
+onsole.log(heights);
