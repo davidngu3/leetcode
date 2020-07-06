@@ -2,36 +2,35 @@
 
 /**
  * Definition for a binary tree node.
- * function TreeNode(val, left, right) {
- *     this.val = (val===undefined ? 0 : val)
- *     this.left = (left===undefined ? null : left)
- *     this.right = (right===undefined ? null : right)
+ * function TreeNode(val) {
+ *     this.val = val;
+ *     this.left = this.right = null;
  * }
  */
 /**
  * @param {TreeNode} root
  * @return {TreeNode}
  */
-
-// we can do an in-order traversal to get the desired result (root, left, right);
-
 var increasingBST = function(root) {
-    let vals = [];
-    inorder(root, vals);
-    let ans = new TreeNode(0);
-    cur = ans;
+    // start with a fake new root to connect the rest and 
+    // assign a pointer cur to keep track of the root of the new tree
+    const newRoot = new TreeNode(undefined);
+    let cur = newRoot;
     
-    vals.forEach(val => {
-        cur.right = new TreeNode(val);
-        cur = cur.right;
-    } )
-    return ans.right;
-    
+    // traversal function; difference from regular traversal: instead of inorder(left), append root to array, inorder(right)
+    // instead: inorder(left), add root to new tree and update root of new tree (relink), inorder(right);
+    const inorder = node => {
+        if (node === null) {
+            return;
+        }
+        inorder(node.left);
+        // for current node, we want to only link the node to the right
+        node.left = null;
+        cur.right = node;
+        // reassign node to cur for the next operation
+        cur = node;
+        inorder(node.right);
+    }
+    inorder(root)
+    return newRoot.right;
 };
-
-const inorder = function(node, vals) {
-    if (node == null) return;
-    inorder(node.left, vals);
-    vals.push(node.val);
-    inorder(node.right, vals);
-}
