@@ -7,22 +7,20 @@
  * @return {number[]}
  */
 var sortArrayByParityII = function(A) {
-    var ans = new Array(A.length);
+    // odd slice pointer
+    let j = 1; 
 
-    // sort the input into 2 arrays of evens and odds
-    let odd = 1;
-    let even = 0;
+    // cycle through even slice
+    for (let i=0; i<A.length; i+=2) { // for each even index
+        if (A[i] % 2 !== 0) { // if not even element
+            while (A[j] % 2 !== 0) { // find an even element from the odd slice
+                j+=2;
+            }
 
-    for (let i=0; i<A.length; i++) {
-        if (A[i] % 2 == 0) {
-            ans[even] = A[i];
-            even+=2;
-        }
-        else {
-            ans[odd] = A[i];
-            odd+=2;
+            // swap the odd and even element
+            [A[i], A[j]] = [A[j], A[i]];
         }
     }
 
-    return ans;
+    return A;
 };
