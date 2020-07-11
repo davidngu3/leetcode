@@ -7,23 +7,21 @@
  * @return {number[]}
  */
 var sortArrayByParityII = function(A) {
-    var evens = [];
-    var odds = [];
+    var ans = new Array(A.length);
 
     // sort the input into 2 arrays of evens and odds
+    let odd = 1;
+    let even = 0;
+
     for (let i=0; i<A.length; i++) {
         if (A[i] % 2 == 0) {
-            evens.push(A[i]);
+            ans[even] = A[i];
+            even+=2;
         }
         else {
-            odds.push(A[i]);
+            ans[odd] = A[i];
+            odd+=2;
         }
-    }
-
-    // interlace the odd and even entries to the output
-    let ans = [];
-    for (let j=0; j<evens.length; j++) {
-        ans.push(evens[j], odds[j]);
     }
 
     return ans;
