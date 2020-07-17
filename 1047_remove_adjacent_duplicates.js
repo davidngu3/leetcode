@@ -3,13 +3,15 @@
  * @return {string}
  */
 var removeDuplicates = function(S) {
-    let res = [];
-    for(let i=0; i<S.length; i++){
-        if(S[i] !== res[res.length-1]) {
-            res.push(S[i]);
+    let answer = [];
+    for (let i=0; i<S.length; i++){
+        // if not duplicate
+        if(S[i] !== answer[answer.length-1]) {
+            answer.push(S[i]);
+        // if duplicate found, pop off stack
         } else {
-            res.pop();
+            answer.pop();
         }
     }
-    return res.join("");
+    return answer.join("");
 };
