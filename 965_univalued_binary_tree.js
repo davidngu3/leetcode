@@ -1,19 +1,14 @@
-/**
- * Definition for a binary tree node.
- * function TreeNode(val, left, right) {
- *     this.val = (val===undefined ? 0 : val)
- *     this.left = (left===undefined ? null : left)
- *     this.right = (right===undefined ? null : right)
- * }
- */
-/**
- * @param {TreeNode} root
- * @return {boolean}
- */
 var isUnivalTree = function(root) {
-    var left = (root.left == null || 
-                (root.val == root.left.val && isUnivalTree(root.left)));
-    var right = (root.right == null ||
-                (root.val == root.right.val && isUnivalTree(root.right)));
-    return left && right;
+    var unival = root.val;
+    return check(root, unival);
+    
+}
+
+function check(node, unival) {
+    if (!node) {
+        return true;
+    }
+    return node.val === unival && 
+        check(node.left, unival) &&
+        check(node.right, unival);
 }
