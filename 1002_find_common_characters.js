@@ -14,20 +14,15 @@ var commonChars = function(A) {
     return current;
 };
 
-function findIntersection(a, b) {
-    let duplicates = [];
-    
-    for (let i=0; i<a.length; i++) {
-        for (let j=0; j<b.length; j++) {
-            if (a[i] == b[j] && !(a[i] == '0')) {
-                duplicates.push(a[i]);
-                a[i] = '0'; // replace with wildcard to pick up duplicates but not mess up indexing
-                b[j] = '0'; 
-            }
+var findIntersection = function(a, b){
+    return a.filter( v => {
+        let i = b.indexOf(v);
+        if(i !== -1){   // if same letter exists in a and b, remove the letter from b
+            b.splice(i, 1);
+            return true
         }
-    }
-    
-    return duplicates;
-}
+        return false; 
+    })
+  }
 
 commonChars(["cool", "lock", "cook"]);
