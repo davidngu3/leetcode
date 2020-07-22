@@ -19,9 +19,10 @@ function findIntersection(a, b) {
     
     for (let i=0; i<a.length; i++) {
         for (let j=0; j<b.length; j++) {
-            if (a[i] == b[j]) {
+            if (a[i] == b[j] && !(a[i] == '0')) {
                 duplicates.push(a[i]);
-                b[j] = '0'; // replace with wildcard to pick up duplicates but not mess up indexing
+                a[i] = '0'; // replace with wildcard to pick up duplicates but not mess up indexing
+                b[j] = '0'; 
             }
         }
     }
@@ -29,4 +30,4 @@ function findIntersection(a, b) {
     return duplicates;
 }
 
-commonChars(["bella","label","roller"]);
+commonChars(["cool", "lock", "cook"]);
