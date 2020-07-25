@@ -5,18 +5,25 @@
  */
 var countCharacters = function(words, chars) {
     let total = 0;
-    for (let word of words) {
-        var copy = chars.slice();
+    
+    for (let i = 0; i < words.length; ++i) {
+        let goodWord = true;
         
-        for (let letter of word) {
-            copy = copy.replace(letter, '');
+        let charsCopy = chars.slice();
+        for (let j = 0; j< words[i].length; ++j) {
+            if (charsCopy.indexOf(words[i][j]) == -1) {
+                goodWord = false;    
+            }
+            charsCopy = charsCopy.replace(words[i][j], '');
         }
-        if (copy.length == chars.length - word.length) {
-            total += word.length;
+        
+        if (goodWord) {
+            total += words[i].length;
         }
     }
     
     return total;
 };
 
-countCharacters(["cat","bt","hat","tree"], "atach");
+countCharacters(["cat","bt","hat","tree"]
+, "atach");
