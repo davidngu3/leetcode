@@ -3,27 +3,22 @@
  * @param {string} chars
  * @return {number}
  */
+
 var countCharacters = function(words, chars) {
-    let total = 0;
-    
-    for (let i = 0; i < words.length; ++i) {
-        let goodWord = true;
-        
+    let filtered = words.filter(word => {
         let charsCopy = chars.slice();
-        for (let j = 0; j< words[i].length; ++j) {
-            if (charsCopy.indexOf(words[i][j]) == -1) {
-                goodWord = false;    
-            }
-            charsCopy = charsCopy.replace(words[i][j], '');
-        }
         
-        if (goodWord) {
-            total += words[i].length;
+        for (var letter of word) {
+            if (charsCopy.indexOf(letter) == -1) { // letter not in chars
+                return false;    
+            }
+            charsCopy = charsCopy.replace(letter, ''); // replace letter in chars as to avoid duplicates
         }
-    }
+
+        return true;
+    });
     
-    return total;
+    return filtered.reduce((acc, cur) => acc + cur.length, 0);
+
 };
 
-countCharacters(["cat","bt","hat","tree"]
-, "atach");
