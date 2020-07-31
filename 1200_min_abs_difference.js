@@ -4,14 +4,13 @@
  */
 var minimumAbsDifference = function(arr) {
     arr = arr.sort((a, b) => a - b);
-    var minDiff = findMinimumDiff(arr);
-    
+    var diffArray = generateDiffArray(arr);
     var ans = [];
-    for (let i = 0; i < arr.length-1; ++i) {
-        var current = arr[i];
-        var next = arr[i+1]
-        if (Math.abs(current - next) == minDiff) {
-            ans.push([current, next]);
+    
+    var minDiff = Math.min(...diffArray);
+    for (let i = 0; i < diffArray.length; i++) {
+        if (diffArray[i] == minDiff) {
+            ans.push([arr[i], arr[i+1]]);
         }
     }
     
@@ -19,17 +18,11 @@ var minimumAbsDifference = function(arr) {
     
 };
 
-function findMinimumDiff(arr) {
-    let prev = arr[0];
-    let minimum = Infinity;
-    
-    for (let i = 1; i < arr.length; ++i) {
-        let probedMin = Math.abs(arr[i] - prev);
-        if (probedMin < minimum) {
-            minimum = probedMin;
-        }
-        prev = arr[i];
+function generateDiffArray(arr) {
+    var newArr = [];
+    for (let i = 0; i < arr.length - 1; ++i) {
+        newArr.push(Math.abs(arr[i+1] - arr[i]));
     }
     
-    return minimum;
+    return newArr;
 }
