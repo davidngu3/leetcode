@@ -3,7 +3,7 @@
  * @return {boolean}
  */
 var isToeplitzMatrix = function(matrix) {
-    for (let i = 0; i < matrix[0].length; i++) {
+    for (let i = 0; i < matrix[0].length - 1; i++) {
         var diagonal = matrix[0][i];
         
         var row = 1;
@@ -18,7 +18,7 @@ var isToeplitzMatrix = function(matrix) {
         }
     }
     
-    for (let i = 1; i < matrix.length; i++) {
+    for (let i = 1; i < matrix.length - 1; i++) {
         var diagonal = matrix[i][0];
         
         var row = i+1;
