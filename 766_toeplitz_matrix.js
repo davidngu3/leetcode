@@ -3,29 +3,22 @@
  * @return {boolean}
  */
 var isToeplitzMatrix = function(matrix) {
+    var startRows = [];
     for (let i = 0; i < matrix[0].length - 1; i++) {
-        var diagonal = matrix[0][i];
-        
-        var row = 1;
-        var col = i+1;
-        
-        while (row < matrix.length && col < matrix[0].length) {
-            if (matrix[row][col] !== diagonal) {
-                return false;
-            }
-            row++;
-            col++;
-        }
+        startRows.push([0, i]);
     }
     
-    for (let i = 1; i < matrix.length - 1; i++) {
-        var diagonal = matrix[i][0];
-        
-        var row = i+1;
-        var col = 1;
+    for (let j = 1; j < matrix.length - 1; j++) {
+        startRows.push([j, 0]);
+    }
+    
+    for (point of startRows) {
+        row = point[0]; col = point[1];
+        var plitzVal = matrix[row][col]
+        row++; col++;
         
         while (row < matrix.length && col < matrix[0].length) {
-            if (matrix[row][col] !== diagonal) {
+            if (matrix[row][col] !== plitzVal) {
                 return false;
             }
             row++;
