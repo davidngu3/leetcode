@@ -18,7 +18,7 @@ var check = function(word, kb) {
     for (row of kb) {
         let pass = 0;
         for (letter of letters) {
-            if (row.includes(letter.toLowerCase())) {
+            if (row.indexOf(letter.toLowerCase()) >= 0) {
                 pass++;
             }
         }
