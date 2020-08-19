@@ -12,44 +12,20 @@
  * @return {boolean}
  */
 var leafSimilar = function(root1, root2) {
-    var sequence1 = generateSequence(root1);
-    var sequence2 = generateSequence(root2);
-    
-    return equals(sequence1, sequence2);
+    dfs = function(node, leaves) {
+        if (node != null) {
+            if (node.left == null && node.right == null) {
+                leaves.push(node.val);
+            }
+            dfs(node.left, leaves);
+            dfs(node.right, leaves);
+        }
+    }
+    let leaves1 = [];
+    let leaves2 = [];
+    dfs(root1, leaves1);
+    dfs(root2, leaves2);
+
+    return (leaves1.length == leaves2.length &&
+            leaves1.every((v, i) => v === leaves2[i]));
 };
-
-
-var equals = function(arr1, arr2) {
-    if (arr1.length !== arr2.length) {
-        return false;
-    }
-    
-    for (let i = 0; i < arr1.length; i++) {
-        if (arr1[i] !== arr2[i]) {
-            return false;
-        }
-    }
-    
-    return true;
-}
-
-
-var generateSequence = function(node) {
-    var leafSequence = [];
-    
-    var traverse = function(node) {
-        if (!node) {
-            return;
-        }
-        if (!node.left && !node.right) {
-            leafSequence.push(node.val);
-        }
-        
-        traverse(node.left);
-        traverse(node.right);
-    }
-    
-    traverse(node);
-    
-    return leafSequence;
-}
