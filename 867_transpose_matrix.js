@@ -7,7 +7,6 @@ var transpose = function(A) {
     
     for (let r = 0; r < A.length; r++ ) {
         for (let c = 0; c < A[0].length; c++ ) {
-            console.log('row' + r + 'col' + c);
             ret[c][r] = A[r][c];
         }
     }
