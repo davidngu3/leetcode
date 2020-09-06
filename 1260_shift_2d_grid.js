@@ -6,7 +6,7 @@
 var shiftGrid = function(grid, k) {
     var ret = [];
     for (let i = 0; i < grid.length; i++) {
-        ret[i] = grid[i].slice();
+        ret[i] = new Array(grid[0].length);
     }
     
     for (let r = 0; r < grid.length; r++) {
