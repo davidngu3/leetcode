@@ -4,30 +4,27 @@
  * @return {number}
  */
 var coinChange = function(coins, amount) {
-    let memo = new Array(coins.length+1).fill().map(e => new Array(amount+1).fill(Infinity));
+    let memo = new Array(amount+1).fill(Infinity);
     
-    for (let r = 0; r < memo.length; ++r) {
-        for (let c = 0; c < memo[0].length; ++c) {
-            if (r == 0) {
-                memo[r][c] = Infinity;
+    for (let coin of coins) {
+        for (let m = 0; m <= amount; ++m) {
+            if (m == 0) {
+                memo[m] = 0;
             }
-            else if (c == 0) {
-                memo[r][c] = 0;
-            }
-            else if (coins[r-1] > c) {
-                memo[r][c] = memo[r-1][c];
+            else if (coin > m) {
+                memo[m] = memo[m];
             }
             else {
-                memo[r][c] = Math.min(memo[r-1][c], memo[r][c-coins[r-1]] + 1);
+                memo[m] = Math.min(memo[m], memo[m-coin]+1);
             }
         }
     }
   
-    if (memo[coins.length][amount] == Infinity) {
+    if (memo[amount] == Infinity) {
         return -1;
     }
     else {
-        return memo[coins.length][amount];
+        return memo[amount];
     }
     
 };
