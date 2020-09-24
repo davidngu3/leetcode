@@ -3,19 +3,19 @@
  * @return {number}
  */
 var maxProfit = function(prices) {
-    var profit = 0;
+    var maxProfit = 0;
     let buyPrice = prices[0];
     
     for (let i = 1; i < prices.length; ++i) {
         if (prices[i] < buyPrice) {  // lower buying price found, update buy price 
             buyPrice = prices[i];
         }
-        else if (prices[i] - buyPrice > profit) { // better profit found, update profit
-            profit = prices[i] - buyPrice;
+        else if (prices[i] - buyPrice > maxProfit) { // better profit found, update profit
+            maxProfit = prices[i] - buyPrice;
         }
     }
     
-    return profit;
+    return maxProfit;
 };
 
 // the idea behind this algorithm:
