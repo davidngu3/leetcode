@@ -2,9 +2,9 @@
  * @param {number[]} nums
  */
 var NumArray = function(nums) {
-    var sum = nums[0];
-    var sums = [nums[0]];
-    for (let i = 1; i < nums.length; ++i) {
+    var sum = 0;
+    var sums = [0];
+    for (let i = 0; i < nums.length; ++i) {
         sum = sum + nums[i];
         sums.push(sum);
     }
@@ -18,12 +18,8 @@ var NumArray = function(nums) {
  * @return {number}
  */
 NumArray.prototype.sumRange = function(i, j) {
-    if (i == 0) {
-        return this.sums[j];
-    }
-    else {
-        return this.sums[j] - this.sums[i-1];
-    }
+    return this.sums[j+1] - this.sums[i];
+
 };
 
 /** 
