@@ -7,14 +7,15 @@ var merge = function(intervals) {
         return intervals;
     }
     
-    intervals.sort(intervalSort);
+    intervals.sort((a, b) => a[0] - b[0]); // sort on first value
+    
     let ret = [];
     let start = intervals[0][0];
     let end = intervals[0][1];
     intervals.push([Infinity, Infinity]); // dummy final value so that last interval is always pushed
     
     for (let i = 1; i < intervals.length; ++i) {
-        if (intervals[i][0] > end ) { // this interval is separate; create new pointers
+        if (intervals[i][0] > end) { // this interval is separate; create new pointers
             ret.push([start, end]);
             start = intervals[i][0];
             end = intervals[i][1];
@@ -28,11 +29,3 @@ var merge = function(intervals) {
     
 };
 
-var intervalSort = function(intA, intB) {
-    if (intA[0] == intB[0]) {
-        return intA[1] - intB[1]; 
-    }
-    else {
-        return intA[0] - intB[0];
-    }
-}
