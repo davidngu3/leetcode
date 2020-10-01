@@ -15,31 +15,34 @@ var leastInterval = function(tasks, n) {
         }
     }
     
-    var ret = 0;
-    let tasksExecuted = 0;
+    let taskExecutionTime = 0;
+    let idleTime = 0;
     
-    while (tasksExecuted < tasks.length) {
-        var nextTask = processTask(taskObj, n);
-        if (nextTask) {    // task found with no cooldown, else idle and dont increment tasksExecuted
-            tasksExecuted++;
+    while (taskExecutionTime < tasks.length) {
+        let nextTask = processTask(taskObj, n);
+        if (nextTask) {    // task found with no cooldown, task block
+            taskExecutionTime++;
         }
-        ret++;
+        else {             // no task found, idle block
+            idleTime++;
+        }
     }
-    
+
+    let ret = taskExecutionTime + idleTime;
     return ret;
 }
 
 function processTask(tasks, cd) {
-    var nextTask = getMostFreqTask(tasks);
+    let freqTask = getMostFreqTask(tasks);
     
-    if (!nextTask) {    // all tasks busy/empty
+    if (!freqTask) {    // all tasks busy/empty
         decrementCooldowns(tasks);
         return false; 
     }
     else {
-        tasks[nextTask][0]--;          // decrement this task count
+        tasks[freqTask][0]--;          // decrement this task count
         decrementCooldowns(tasks);         // decrement all cooldowns
-        tasks[nextTask][1] = cd;       // set this task cooldown timer
+        tasks[freqTask][1] = cd;       // set this task cooldown timer
         return true;
     }
 }
@@ -48,8 +51,8 @@ function getMostFreqTask(tasks) {
     let max = 0;
     let freqTask;
     
-    for (task in tasks) {
-        if (tasks[task][0] > max && tasks[task][1] > 0) { // if available task with no cooldown
+    for (let task in tasks) {
+        if (tasks[task][0] > max && tasks[task][1] == 0) { // if available task with no cooldown
             max = tasks[task][0];
             freqTask = task; 
         }
@@ -65,8 +68,10 @@ function getMostFreqTask(tasks) {
 
 
 function decrementCooldowns(tasks) {
-    for (task in tasks) {
-        tasks[task][1]--;
+    for (let task in tasks) {
+        if (tasks[task][1] > 0) {
+            tasks[task][1]--;
+        }
     }
 }
 
