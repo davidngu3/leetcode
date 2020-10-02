@@ -4,73 +4,71 @@
  * @return {number}
  */
 var leastInterval = function(tasks, n) {
-    let taskObj = {};
-    
-    for (let i = 0; i < tasks.length; ++i) {
-        if (taskObj.hasOwnProperty(tasks[i])) { // tasks exists, increment task count
-            taskObj[tasks[i]][0]++;
-        }
-        else {
-            taskObj[tasks[i]] = [1, 0]; // [task_count, cooldown_timer]
-        }
+    // tasks[i] is an upper-case english letter so there is at most 26 different tasks, so we can use a count array for fast sorting
+    // populate count array
+    let count = new Array(26).fill(0);
+    for (let i = 0; i < tasks.length; i++) {
+        let charCode = tasks[i].charCodeAt(0) - "A".charCodeAt(0);
+        count[charCode]++;
     }
     
-    let taskExecutionTime = 0;
-    let idleTime = 0;
-    
-    while (taskExecutionTime < tasks.length) {
-        let nextTask = processTask(taskObj, n);
-        if (nextTask) {    // task found with no cooldown, task block
-            taskExecutionTime++;
+    // convert to priority queue based on num of tasks [num_tasks, cooldown]
+    count = count.filter(e => e > 0).sort((a, b) => b - a);
+    let taskQueue = count.map(e => [e, 0]);
+ 
+    let currItem;
+    let ret = 0;
+        
+    // process queue
+    while (taskQueue.length > 0) {
+        let taskIndex = getNextTask(taskQueue); // next task index
+        
+        if (taskIndex !== null) {   // if task available
+            let newTask = taskQueue.splice(taskIndex, 1)[0];  // pop new task from queue
+            newTask[1] = n + 1;           // set cooldown
+            newTask[0]--;                 // decrease count 
+            if (newTask[0] > 0) {         // only add back to queue if still count
+                let enqueueIndex = enqueue(taskQueue, newTask);
+                taskQueue.splice(enqueueIndex, 0, newTask);
+            }
         }
-        else {             // no task found, idle block
-            idleTime++;
-        }
+        
+        decrementCooldowns(taskQueue);
+        ret++;
     }
-
-    let ret = taskExecutionTime + idleTime;
+    
     return ret;
 }
 
-function processTask(tasks, cd) {
-    let freqTask = getMostFreqTask(tasks);
+function getNextTask(queue) {
+    let nextTask = 0;
     
-    if (!freqTask) {    // all tasks busy/empty
-        decrementCooldowns(tasks);
-        return false; 
+    while (nextTask < queue.length) {
+        if (queue[nextTask][1] == 0) {
+            return nextTask;
+        }
+        nextTask++;
     }
-    else {
-        tasks[freqTask][0]--;          // decrement this task count
-        decrementCooldowns(tasks);         // decrement all cooldowns
-        tasks[freqTask][1] = cd;       // set this task cooldown timer
-        return true;
-    }
+    return null;
 }
 
-function getMostFreqTask(tasks) {
-    let max = 0;
-    let freqTask;
+function enqueue(queue, task) {
+    let position = 0;
     
-    for (let task in tasks) {
-        if (tasks[task][0] > max && tasks[task][1] == 0) { // if available task with no cooldown
-            max = tasks[task][0];
-            freqTask = task; 
+    while (position < queue.length) {
+        if (queue[position][0] < task[0]) {
+            return position;
         }
+        position++;
     }
-    
-    if (max == 0) { // no task found, all on cooldown
-        return null;
-    }
-    else {
-        return freqTask;
-    }
+    return queue.length;
 }
 
 
 function decrementCooldowns(tasks) {
-    for (let task in tasks) {
-        if (tasks[task][1] > 0) {
-            tasks[task][1]--;
+    for (let j = 0; j < tasks.length; j++) {
+        if (tasks[j][1] > 0) {
+            tasks[j][1]--;
         }
     }
 }
