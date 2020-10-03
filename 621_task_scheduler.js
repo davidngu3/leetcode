@@ -4,72 +4,41 @@
  * @return {number}
  */
 var leastInterval = function(tasks, n) {
-    // tasks[i] is an upper-case english letter so there is at most 26 different tasks, so we can use a count array for fast sorting
-    // populate count array
-    let count = new Array(26).fill(0);
-    for (let i = 0; i < tasks.length; i++) {
-        let charCode = tasks[i].charCodeAt(0) - "A".charCodeAt(0);
-        count[charCode]++;
+    // count number of tasks, and keep track of the highest frequency for any given task
+    let highestFreq = 0;
+    let count = {};
+    for (let task of tasks) {
+        if (count[task] == undefined) count[task] = 1;
+        else {
+            count[task]++;
+        }
+        highestFreq = Math.max(highestFreq, count[task]);
     }
     
-    // convert to priority queue based on num of tasks [num_tasks, cooldown]
-    count = count.filter(e => e > 0).sort((a, b) => b - a);
-    let taskQueue = count.map(e => [e, 0]);
- 
-    let currItem;
-    let ret = 0;
-        
-    // process queue
-    while (taskQueue.length > 0) {
-        let taskIndex = getNextTask(taskQueue); // next task index
-        
-        if (taskIndex !== null) {   // if task available
-            let newTask = taskQueue.splice(taskIndex, 1)[0];  // pop new task from queue
-            newTask[1] = n + 1;           // set cooldown
-            newTask[0]--;                 // decrease count 
-            if (newTask[0] > 0) {         // only add back to queue if still count
-                let enqueueIndex = enqueue(taskQueue, newTask);
-                taskQueue.splice(enqueueIndex, 0, newTask);
-            }
-        }
-        
-        decrementCooldowns(taskQueue);
-        ret++;
+    // Consider the most efficient scenario where the time between two identical tasks is longer than n, the cooldown time: 
+    // e.g. n=2, ABCDABCDAB
+    // Then the answer is just the length of tasks, idle time is irrelevant
+
+    // Now consider the scenario where we don't have enough 'filler' tasks to fill a gap of n between our most frequent task(s).
+    // e.g. n=2, ABCABxAB, notice how we need idle block (x) to fill a gap of 2
+    // This time constraint represents all other scenarios that aren't the 'most efficient scenario' explained above.
+    // The best layout for this scenario (given eg. highest freq = 3) is:
+    // [Most frequent task] .. [filler] .. [Most frequent task] .. [filler] .. [Most frequent Task]
+    // e.g. AB ..filler.. AB ..filler.. AB
+    // Note that there needn't be any tasks afterwards, as any other task will have frequency < 3 in this scenario,  
+    // This means that any other task(s) can be dropped into one, or both of the filler blocks 
+    
+    // To calculate the total time consumed by this pattern:
+    // (AB .. filler)  occurs (highestFreq-1) times, and each block consumes (n+1) time since there must be n time between A's
+    // Thus our total is (highestFreq-1)(n+1) + timeFor(AB)
+    // If this time is less than tasks.length then it means it was possible to completely fill the filler blocks, thus take the most efficient scenario
+    
+    let highFreqTasks = 0;
+    for (let t in count) {
+        if (count[t] == highestFreq) highFreqTasks++;
     }
     
-    return ret;
+    return Math.max(tasks.length, (highestFreq-1)*(n+1) + highFreqTasks);
 }
 
-function getNextTask(queue) {
-    let nextTask = 0;
-    
-    while (nextTask < queue.length) {
-        if (queue[nextTask][1] == 0) {
-            return nextTask;
-        }
-        nextTask++;
-    }
-    return null;
-}
-
-function enqueue(queue, task) {
-    let position = 0;
-    
-    while (position < queue.length) {
-        if (queue[position][0] < task[0]) {
-            return position;
-        }
-        position++;
-    }
-    return queue.length;
-}
-
-
-function decrementCooldowns(tasks) {
-    for (let j = 0; j < tasks.length; j++) {
-        if (tasks[j][1] > 0) {
-            tasks[j][1]--;
-        }
-    }
-}
 
