@@ -5,19 +5,14 @@
 
 class Solution:
     def isOneBitCharacter(self, bits: List[int]) -> bool:
-        skipFlag = False
-        lastChar = None
+        i = 0
         
-        for bit in bits:
-            
-            if skipFlag:
-                skipFlag = False
-                lastChar = 1
-                continue
-                
-            if bit == 1:
-                skipFlag = True
+        while i < len(bits) - 1:
+            if bits[i] == 0:
+                i += 1
             else:
-                lastChar = 0
+                i += 2
         
-        return not lastChar
+        return i == len(bits) - 1:
+
+            
