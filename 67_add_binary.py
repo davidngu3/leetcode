@@ -2,13 +2,19 @@
 
 class Solution:
     def addBinary(self, a: str, b: str) -> str:
-        intA = int(a, 2)
-        intB = int(b, 2)
-        intSum = intA + intB
-        binSum = bin(intSum)
+        carry = 0
+        result = ''
 
-        print(binSum[2:])
-        return binSum
+        a = list(a)
+        b = list(b)
 
-newSolution = Solution()
-newSolution.addBinary("11", "1")  
+        while a or b or carry:
+            if a:
+                carry += int(a.pop())
+            if b:
+                carry += int(b.pop())
+
+            result += str(carry %2)
+            carry //= 2
+
+        return result[::-1]
