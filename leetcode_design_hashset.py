@@ -17,7 +17,8 @@ class MyHashSet:
 
     def remove(self, key: int) -> None:
         hashval = key % 1000
-        self.hashset[hashval].remove(hashval)
+        if self.contains(key):
+            self.hashset[hashval].remove(key)
         
 
     def contains(self, key: int) -> bool:
