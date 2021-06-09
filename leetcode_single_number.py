@@ -12,5 +12,4 @@ class Solution:
                 hashset.add(num)
         
         
-        for val in hashset:
-            return val
+        return hashset.get(0)
