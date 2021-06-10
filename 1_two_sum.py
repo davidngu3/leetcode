@@ -1,13 +1,13 @@
 class Solution:
     def twoSum(self, nums: List[int], target: int) -> List[int]:
-        hashmap = {}
+        seen = {}
         
         for index, value in enumerate(nums):
             required = target - nums[index]
             
-            if required in hashmap:
-                return [index, hashmap[required]]
+            if required in seen:
+                return [index, seen[required]]
             
-            hashmap[value] = index # store key value pair (num, index)
+            seen[value] = index # store key value pair (num, index)
             
         return False
