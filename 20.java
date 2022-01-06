@@ -4,10 +4,10 @@ class Solution20 {
     public static void main(String[] args) {
         System.out.println(isValid("{}(())"));
     }
-
+    
     public static boolean isValid(String s) {
         // Create stack
-        LinkedList<Character> stack = new LinkedList<>();
+        Deque<Character> stack = new LinkedList<>();
 
         for (char c : s.toCharArray()) {
             // if opening parentheses add to stack
