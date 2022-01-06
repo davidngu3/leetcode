@@ -9,6 +9,7 @@
  * }
  */
 class Solution21 {
+    // NOTE: we can avoid O(N) space from new list by using a pointer.
     public static void main(String[] args) {
         ListNode21 a = new ListNode21(1);
         ListNode21 b = new ListNode21(2);
