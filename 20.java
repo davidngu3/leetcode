@@ -16,7 +16,8 @@ class Solution20 {
             }
             // if closed parentheses check valid matching bracket, then pop from stack
             else { 
-                if (c == '}' && !stack.peekFirst().equals('{')
+                if (stack.isEmpty()
+                || c == '}' && !stack.peekFirst().equals('{')
                 || c == ')' && !stack.peekFirst().equals('(')
                 || c == ']' && !stack.peekFirst().equals('['))  {
                     return false;
