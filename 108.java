@@ -4,6 +4,13 @@ class Solution108 {
     }
 
     public static TreeNode108 sortedArrayToBST(int[] nums) {
+        if (nums.length == 1) {
+            return new TreeNode108(nums[0]);
+        }
+        if (nums.length == 2) {
+            return new TreeNode108(nums[0], null, new TreeNode108(nums[1]));
+        } 
+
         int m = nums.length / 2;
         int mid = nums[m];
 
