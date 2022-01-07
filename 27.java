@@ -7,9 +7,7 @@ class Solution27 {
         
         for (int i = 0; i < nums.length; i++) {
             if (!(Integer.compare(nums[i], val) == 0)) {
-                int temp = nums[i];
-                nums[i] = val;
-                nums[p] = temp;
+                nums[p] = nums[i];
                 p++;
             }
         }
