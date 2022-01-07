@@ -14,14 +14,11 @@ class Solution83 {
 
         while (head != null) {
             if (head.next != null && head.val == head.next.val) { 
-                // find next non-duplicate node
-                ListNode83 cont = head.next;
-                while (cont != null && cont.val == head.val) {
-                    cont = cont.next;
-                }
-                head.next = cont;
+                head.next = head.next.next;
             }
-            head = head.next;
+            else {
+                head = head.next;
+            }
         }
 
         return ret;
