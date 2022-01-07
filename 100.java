@@ -11,7 +11,7 @@ class TreeNode100 {
     }
 }
 
-class Solution {
+class Solution100 {
     public boolean isSameTree(TreeNode100 p, TreeNode100 q) {
         if (p == null && q == null) {
             return true;

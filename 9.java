@@ -1,6 +1,6 @@
 import java.util.*;
 
-class Solution {
+class Solution9 {
     public static void main(String[] args) {
         System.out.println(isPalindromeNoConversion(55));
     }

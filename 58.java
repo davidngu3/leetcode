@@ -1,5 +1,3 @@
-import java.util.*;
-
 class Solution58 {
     public static void main(String[] args) {
         lengthOfLastWord("Hello World ");
