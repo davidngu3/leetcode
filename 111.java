@@ -28,34 +28,32 @@ class Solution111 {
             return 0;
         }
         
-        Deque<NodeWithHeight> queue = new LinkedList<NodeWithHeight>();
-        queue.addLast(new NodeWithHeight(root, 1));
+        Deque<TreeNode> queue = new LinkedList<TreeNode>();
+        queue.addLast(root);
         
+        int depth = 1;
         while (!queue.isEmpty()) {
-            NodeWithHeight curr = queue.removeFirst();
+            int nodesInLayer = queue.size();
+
+            while (nodesInLayer > 0) {
+                TreeNode curr = queue.removeFirst();
+                nodesInLayer--;
+
+                if (curr.left == null && curr.right == null) {
+                    return depth;
+                }
             
-            if (curr.node.left == null && curr.node.right == null) {
-                return curr.height;
+                if (curr.left != null) { 
+                    queue.addLast(curr.left); 
+                }
+                if (curr.right != null) {
+                    queue.addLast(curr.right);
+                }
             }
-        
-            if (curr.node.left != null) { 
-                queue.addLast(new NodeWithHeight(curr.node.left, curr.height + 1)); 
-            }
-            if (curr.node.right != null) {
-                queue.addLast(new NodeWithHeight(curr.node.right, curr.height + 1));
-            }
+            
+            depth++;
         }
         
         return -1;
-    }
-}
-
-class NodeWithHeight {
-    int height;
-    TreeNode node;
-    
-    public NodeWithHeight(TreeNode node, int height) {
-        this.node = node;
-        this.height = height;
     }
 }

@@ -19,28 +19,16 @@ public class TreeNode {
     }
 
     public static TreeNode createTreeNodeFromArray(List<Integer> arr) {
-        return createNodeHelper(arr, 0);
+        return createNodeHelper(arr, 0, (arr.size()-2) / 2);
     }
 
-    private static TreeNode createNodeHelper(List<Integer> arr, int i) {
-        return new TreeNode(arr.get(i), createNodeHelper(arr, i*2+1), createNodeHelper(arr, i*2+2));
-    }
-
-    public static void print(TreeNode root) {
-        LinkedList<TreeNode> queue = new LinkedList<>();
-        queue.addLast(root);
-
-        while (!queue.isEmpty()) {
-            TreeNode popped = queue.removeFirst();
-            if (popped == null) {
-                System.out.println("null");
-            }
-            else {
-                System.out.println(popped.val);
-            }
-
-            queue.addLast(popped.left);
-            queue.addLast(popped.right);
+    private static TreeNode createNodeHelper(List<Integer> arr, int i, int max) {
+        if (arr.get(i) == null) {
+            return null;
         }
+        if (i > max) {
+            return new TreeNode(arr.get(i));
+        }
+        return new TreeNode(arr.get(i), createNodeHelper(arr, i*2+1, max), createNodeHelper(arr, i*2+2, max));
     }
 }
