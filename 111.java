@@ -1,3 +1,5 @@
+import java.util.*;
+
 /**
  * Definition for a binary tree node.
  * public class TreeNode {
@@ -13,24 +15,41 @@
  *     }
  * }
  */
-class Solution111 {
+class Solution {
     public int minDepth(TreeNode root) {
         if (root == null) {
             return 0;
         }
         
-        return minDepthAux(root);
-    }
-    
-    public int minDepthAux(TreeNode root) {
-        if (root == null) {
-            return 100001;        
+        Deque<NodeWithHeight> queue = new LinkedList<NodeWithHeight>();
+        int currHeight = 1;
+        queue.addLast(new NodeWithHeight(root, currHeight));
+        
+        while (!queue.isEmpty()) {
+            NodeWithHeight curr = queue.removeFirst();
+            
+            if (curr.node.left == null && curr.node.right == null) {
+                return curr.height;
+            }
+            
+            if (root.left != null) { 
+                queue.addLast(new NodeWithHeight(root.left, currHeight + 1)); 
+            }
+            if (root.right != null) {
+                queue.addLast(new NodeWithHeight(root.right, currHeight + 1));
+            }
         }
         
-        if (root.left == null && root.right == null) {
-            return 1;
-        }
+        return -1;
+    }a
+}
 
-        return 1 + Math.min(minDepthAux(root.left), minDepthAux(root.right));
+class NodeWithHeight {
+    int height;
+    TreeNode node;
+    
+    public NodeWithHeight(TreeNode node, int height) {
+        this.node = node;
+        this.height = height;
     }
 }
