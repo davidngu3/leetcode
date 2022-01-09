@@ -4,13 +4,6 @@ class Solution108 {
     }
 
     public static TreeNode108 sortedArrayToBST(int[] nums) {
-        if (nums.length == 1) {
-            return new TreeNode108(nums[0]);
-        }
-        if (nums.length == 2) {
-            return new TreeNode108(nums[0], null, new TreeNode108(nums[1]));
-        } 
-
         return addToBST(nums, 0, nums.length-1);
     }
 
@@ -20,14 +13,8 @@ class Solution108 {
         }
 
         int m = left + (right - left)/2;
-        int mid = nums[m];
 
-        TreeNode108 node = new TreeNode108(mid);
-
-        node.left = addToBST(nums, left, m-1);
-        node.right = addToBST(nums, m+1, right);
-
-        return node;
+        return new TreeNode108(nums[m], addToBST(nums, left, m-1), addToBST(nums, m+1, right));
     }
 }
 
