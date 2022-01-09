@@ -11,31 +11,23 @@ class Solution108 {
             return new TreeNode108(nums[0], null, new TreeNode108(nums[1]));
         } 
 
-        int m = nums.length / 2;
+        return addToBST(nums, 0, nums.length-1);
+    }
+
+    public static TreeNode108 addToBST(int[] nums, int left, int right) {
+        if (left > right) {
+            return null;
+        }
+
+        int m = left + (right - left)/2;
         int mid = nums[m];
 
-        TreeNode108 root = new TreeNode108(mid);
+        TreeNode108 node = new TreeNode108(mid);
 
-        int i = m - 1;
-        TreeNode108 lower = root;
-        while (i >= 0) {
-            lower.left = new TreeNode108(nums[i]);
-            i--;
-            lower = lower.left;
-        }
+        node.left = addToBST(nums, left, m-1);
+        node.right = addToBST(nums, m+1, right);
 
-        int j = nums.length - 2;
-
-        root.right = new TreeNode108(nums[nums.length - 1]);
-        TreeNode108 upper = root.right;
-
-        while (j > m) {
-            upper.left = new TreeNode108(nums[j]);
-            j--;
-            upper = upper.left;
-        }
-
-        return root;
+        return node;
     }
 }
 
