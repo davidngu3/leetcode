@@ -12,9 +12,11 @@ class Solution118 {
         List<Integer> firstRow = new ArrayList<Integer>(Arrays.asList(1));
         ret.add(firstRow);
 
+        List<Integer> row, prevRow;
+
         for (int i = 1; i < numRows; i++) {
-            List<Integer> row = new ArrayList<Integer>();
-            List<Integer> prevRow = ret.get(i-1);
+            row = new ArrayList<Integer>();
+            prevRow = ret.get(i-1);
             
             // add leading one
             row.add(1);
