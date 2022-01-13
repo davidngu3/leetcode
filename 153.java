@@ -1,5 +1,10 @@
 class Solution153 {
-    public int findMin(int[] nums) {
+    public static void main(String[] args) {
         
+    }
+
+    public static int findMin(int[] nums) {
+        
+        return 0;
     }
 }
