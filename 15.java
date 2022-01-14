@@ -44,8 +44,7 @@ class Solution15 {
                 if (sum == 0) {
                     ret.add(Arrays.asList(nums[left], nums[i], nums[right]));
 
-                    // Notice that the solution set must not contain duplicate triplets.
-                    // So skipped duplicate items from left and right.
+                    // skip duplicates
                     while (left < right && nums[left] == nums[left + 1]) {
                         left++;
                     }
