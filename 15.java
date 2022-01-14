@@ -29,7 +29,7 @@ class Solution15 {
                     if (!pairs.containsKey(nums[i] + nums[j])) {
                         pairs.put(nums[i] + nums[j], new ArrayList<List<Integer>>());
                     }
-                    pairs.get(nums[i] + nums[j]).add(new ArrayList<Integer>(Arrays.asList(nums[i], nums[j])));
+                    pairs.get(nums[i] + nums[j]).add(new ArrayList<Integer>(Arrays.asList(i, j)));
                 }
             }
         }
