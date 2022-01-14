@@ -13,7 +13,7 @@ strategy:
 
 class Solution15 {
     public static void main(String[] args) {
-        threeSum(new int[]{ 0, 0, 0, 0 });
+        threeSum(new int[] { 0, 0, 0, 0 });
     }
 
     public static List<List<Integer>> threeSum(int[] nums) {
@@ -30,7 +30,7 @@ class Solution15 {
         while (nums[i] <= 0 && i < nums.length - 2) {
             // find first non duplicate
             if (i != 0) {
-                while (i < nums.length - 2 && nums[i] == nums[i-1]) {
+                while (i < nums.length - 2 && nums[i] == nums[i - 1]) {
                     i++;
                 }
             }
@@ -39,19 +39,23 @@ class Solution15 {
             int right = nums.length - 1;
 
             while (left < right) {
-                int sum = nums[left]  + nums[right] + nums[i];
-                
-                if (sum ==0) {
+                int sum = nums[left] + nums[right] + nums[i];
+
+                if (sum == 0) {
                     ret.add(Arrays.asList(nums[left], nums[i], nums[right]));
-                    
-					// Notice that the solution set must not contain duplicate triplets.
+
+                    // Notice that the solution set must not contain duplicate triplets.
                     // So skipped duplicate items from left and right.
-                    while (left < right && nums[left] == nums[left + 1]) { left++; }
-                    while (left < right && nums[right] == nums[right - 1]) { right--; }
-                    
+                    while (left < right && nums[left] == nums[left + 1]) {
+                        left++;
+                    }
+                    while (left < right && nums[right] == nums[right - 1]) {
+                        right--;
+                    }
+
                     left++;
                     right--;
-                    
+
                 } else if (sum > 0) {
                     right--;
                 } else {
@@ -60,7 +64,7 @@ class Solution15 {
             }
             i++;
         }
-        
+
         return ret;
     }
 }
