@@ -3,14 +3,12 @@ class Solution268 {
         
     }
     public static int missingNumber(int[] nums) {
-        int n = nums.length; 
-        int sum = 0;
-        int calcSum = n*(n+1)/2;
-        
-        for (int i : nums) {
-            sum += i;
+        int ret = nums.length;
+
+        for (int i = 0; i < nums.length; i++) {
+            ret = ret ^ i ^ nums[i];
         }
-        
-        return calcSum - sum;
+
+        return ret;
     }
 }
