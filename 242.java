@@ -6,27 +6,25 @@ class Solution242 {
     }
 
     public static boolean isAnagram(String s, String t) {
-        // build frequency hashmap for s
-        HashMap<Character, Integer> map = new HashMap<>();
+        // build frequency table for s
+        int[] freq = new int[26];
         for (char c : s.toCharArray()) {
-            if (!map.containsKey(c)) {
-                map.put(c, 0);
-            }
-            map.put(c, map.get(c) + 1);
+            int i = c - 'a';
+            freq[i]++;
         }
         
-        // deduct values in hashmap for char in t
+        // deduct values in table for char in t
         for (char ch : t.toCharArray()) {
-            if (!map.containsKey(ch)) {
+            int i = ch - 'a';
+            freq[i]--;
+        }
+        
+        // check if table is empty
+        for (int j : freq) {
+            if (j != 0) {
                 return false;
             }
-            map.put(ch, map.get(ch) - 1);
-            if (map.get(ch) <= 0) {
-                map.remove(ch);
-            }
         }
-        
-        // check if s is empty
-        return map.isEmpty();
+        return true;
     }
 }
