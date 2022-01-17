@@ -14,27 +14,28 @@ class Solution3 {
         char[] chars = s.toCharArray();
         HashMap<Character, Integer> map = new HashMap<>();
 
+        // variable setup
         int i = 0; 
         int j = 0;
+        int longest = 0;
 
-        map.put(chars[i], 0);
-        int longest = 1;
-
-        while (j < s.length() - 1) {
-            j++;
+        while (j < s.length()) {
+            char curr = chars[j];
 
             // put char in map
-            if (!map.containsKey(chars[j]) || map.get(chars[j]) < i) {
-                map.put(chars[j], j);
+            if (!map.containsKey(curr) || map.get(curr) < i) {
+                map.put(curr, j);
                 // update longest substring
                 int currLen = j - i + 1;
                 longest = Math.max(longest, currLen);
             }
             else {
                 // duplicate found, shift left pointer to the right of the initial occurrence
-                i = map.get(chars[j]) + 1;
+                i = map.get(curr) + 1;
                 map.put(chars[j], j);
             }
+
+            j++;
         }
 
         return longest;
