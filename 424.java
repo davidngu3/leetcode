@@ -2,7 +2,7 @@ import java.util.HashMap;
 
 class Solution424 {
     public static void main(String[] args) {
-        System.out.println(characterReplacement("AABABBA", 1));
+        System.out.println(characterReplacement("MJSDSSMESSTR", 2)); // expected 6
     }
 
     public static int characterReplacement(String s, int k) {
@@ -32,11 +32,16 @@ class Solution424 {
 
             // shift left pointer if condition doesnt hold
             if (!cond) {
-                while (chars[i] == chars[i+1]) {
+                char curr = chars[i]; // char to transition from
+
+                while (chars[i] == curr) {
+                    map.put(curr, map.get(curr) - 1);
                     i++;
                 }
-                map.remove(chars[i]);
-                i++;
+                
+                if (map.get(curr) <= 0) {
+                    map.remove(curr);
+                }
             }
             
             // shift right pointer and update max
