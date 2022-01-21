@@ -30,3 +30,11 @@ class Solution300 {
         return ret;
     }
 }
+
+/*
+    Complexity: O(N^2)
+    Alternative: Binary search appraoch
+    Read in integers,
+    1. Integer is larger than the largest in the solution array, append
+    2. Integer is smaller than the largest, replace the smallest int >= it using binary search
+*/
