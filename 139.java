@@ -12,6 +12,7 @@ class Solution139 {
         }
 
         int n = s.length();
+        
         boolean[] dp = new boolean[n + 1];
         dp[0] = true; // empty string can be made
 
@@ -21,6 +22,7 @@ class Solution139 {
 
                 if (dp[j] == true && dict.containsKey(s.substring(j, i))) {
                     dp[i] = true;
+                    break;
                 }
             }
         }
