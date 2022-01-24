@@ -6,21 +6,20 @@ class Solution377 {
     }
 
     public static int combinationSum4(int[] nums, int target) {
-        int[] ret = new int[] { 0 };
-
-        permute(nums, target, ret);
-        return ret[0];
-    }
-    
-    public static void permute(int[] nums, int target, int[] ret) {
-        if (target == 0) {
-            ret[0]++;
-        }
-
-        if (target > 0) {
-            for (int z : nums) {
-                permute(nums, target-z, ret);
+        int[] memo = new int[target+1];
+        
+        // base case: 1 ways to make 0 (take none)
+        memo[0] = 1;
+        
+        for (int i = 1; i < memo.length; i++) {
+            for (int c : nums) {
+                // if within bounds, add ways to make i - c
+                if (i - c >= 0) {
+                    memo[i] += memo[i-c];    
+                }    
             }
         }
+        
+        return memo[target];
     }
 }
