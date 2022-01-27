@@ -2,29 +2,43 @@ class Solution55 {
     public static void main(String[] args) {
         canJump(new int[] {0, 2, 3});
     }
+
     public static boolean canJump(int[] nums) {
-        boolean[] dp = new boolean[nums.length];
-        dp[0] = true; 
+        // edge cases
+
+        if (nums.length == 1) {
+            return true;
+        } 
         
-        for (int i = 0; i < nums.length - 1; i++) {
-            if (dp[i]) { // if this cell is accessible
-                int jumps = nums[i];
-            
-                // mark jumps as accessible
-                for (int j = 1; j <= jumps; j++) {
-                    
-                    // if jump goes to or outside end index, return true;
-                    if (i + j >= nums.length - 1) {
-                        return true;
-                    }
-                    
-                    dp[i+j] = true;
-                }
+        if (nums.length == 2) {
+            return nums[0] > 0;
+        }
+
+        if (nums[0] == 0) {
+            return false;
+        }
+
+        // stores furthest reachable index
+        int[] dp = new int[nums.length]; 
+        dp[0] = nums[0];
+
+        for (int i = 1; i < nums.length - 1; i++) {
+            // early failure condition: cannot jump past zero
+            if (nums[i] == 0 && dp[i-1] <= i) {
+                return false;
             }
             
+            // calculate max reachable index
+            dp[i] = Math.max(dp[i-1], i+nums[i]);
+
+            // early success condition: reachable index at/past final index
+            if (dp[i] >= nums.length - 1) {
+                return true;
+            }
             
         }
-        
-        return dp[nums.length - 1];
+ 
+        return false;
+
     }
 }
