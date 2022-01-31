@@ -1,6 +1,6 @@
 import java.util.*;
 
-class Solution {
+class Solution56 {
     public int[][] merge(int[][] intervals) {
         // sort input by start value
         Arrays.sort(intervals, (a, b) -> Integer.compare(a[0], b[0]));
