@@ -21,9 +21,8 @@ class Solution206 {
         }
         
         // set up pointers
-        ListNode curr = head.next;
-        ListNode prev = head;
-        prev.next = null; // break first link
+        ListNode curr = head;
+        ListNode prev = null; 
         
         // reverse links iteratively
         while (curr != null) {
