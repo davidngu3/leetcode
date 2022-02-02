@@ -18,12 +18,7 @@ class Solution206 {
         
         ListNode fast = head;
         
-        while (fast != null && head != null) {
-            if (fast == null || fast.next == null || head == null) {
-                return false;
-            }
-            
-            // traverse pointers
+        while (fast != null && fast.next != null) {
             fast = fast.next.next;
             head = head.next;
             
@@ -35,7 +30,7 @@ class Solution206 {
             
         }
         
-        // not hit
+        // fast hits null (end of list, so no cycle)
         return false;
     }
 }
