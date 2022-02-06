@@ -18,34 +18,28 @@ import org.w3c.dom.Node;
 class Solution23 {
     public static void main(String[] args) {
         // list 1
-        ListNode c = new ListNode(6);
-        ListNode b = new ListNode(5, c);
-        ListNode a = new ListNode(2, b);
+        ListNode c = new ListNode(-2);
+        ListNode b = new ListNode(-2, c);
+        ListNode a = new ListNode(-1, b);
         
         // list 2
-        ListNode f = new ListNode(10);
-        ListNode e = new ListNode(7, f);
-        ListNode d = new ListNode(3, e);
+        ListNode f = null;
 
-        // list 3
-        ListNode i = new ListNode(14);
-        ListNode h = new ListNode(9, i);
-        ListNode g = new ListNode(1, h);
+        // // list 3
+        // ListNode i = new ListNode(14);
+        // ListNode h = new ListNode(9, i);
+        // ListNode g = new ListNode(1, h);
         
-        ListNode[] input = new ListNode[] { a, d, g };
+        ListNode[] input = new ListNode[] { a, f };
     
         mergeKLists(input);
     }
+    
     public static ListNode mergeKLists(ListNode[] lists) {
-        // same as merge 2, but need to find the min element in all K lists
-        // to find min, may be best to use a min heap, extract min
-        // in heap, list index and value , arbritrarily break ties
-        
-        // amortized O(1) insertion, O(N) time, N is number of elements
-
+        // add nodes directly to priority queue
         // create min heap
-        PriorityQueue<NodeData> heap = new PriorityQueue<>(new Comparator<NodeData>() {
-            public int compare(NodeData a, NodeData b) {
+        PriorityQueue<ListNode> heap = new PriorityQueue<>(new Comparator<ListNode>() {
+            public int compare(ListNode a, ListNode b) {
                 return a.val - b.val;
             }
         });
@@ -55,7 +49,7 @@ class Solution23 {
             ListNode list = lists[i];
 
             while (list != null) {
-                heap.add(new NodeData(i, list.val));
+                heap.add(list);
                 list = list.next;
             }
         }
@@ -66,26 +60,18 @@ class Solution23 {
 
         while (!heap.isEmpty()) {
             // get min node
-            NodeData popped = heap.poll();
+            ListNode popped = heap.poll();
 
             // add to merged list
-            merged.next = lists[popped.listIndex];
+            merged.next = popped;
             
             // advance pointers
             merged = merged.next;
-            lists[popped.listIndex] = lists[popped.listIndex].next;
         }
 
+        // tie off end
+        merged = null;
+
         return mergedHead.next;
-    }
-}
-
-class NodeData {
-    int listIndex;
-    int val;
-
-    public NodeData(int listIndex, int val) {
-        this.val = val;
-        this.listIndex = listIndex;  
     }
 }
