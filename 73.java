@@ -11,20 +11,13 @@ class Solution73 {
     public static void setZeroes(int[][] matrix) {
         // the problem: how to differentiate original zeroes and new zeroes?
         // cant use placeholder as values in matrix span whole integer range
+        
+        // solution: use the first row and first column as a flagging system. 
+        // set zero rows, cols which we know the wohle thing should be zero
     
-    
-    }
+        // on second pass, use the flags to set the rest of the cells to zero
 
-    // O(M + N) time complexity
-    public static void setZerosRowCol(int rowIndex, int colIndex, int[][] matrix) {
-        // set row to zero
-        for (int i = 0; i < matrix[rowIndex].length; i++) {
-            matrix[rowIndex][i] = 0;
-        }
+        // O(MN) time complexity O(1) space
 
-        // set col to zero
-        for (int j = 0; j < matrix[0].length; j++) {
-            matrix[j][colIndex] = 0;
-        }
     }
 }
