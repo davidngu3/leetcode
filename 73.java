@@ -1,4 +1,4 @@
-class Solution73 {
+class Solution {
     public void setZeroes(int[][] matrix) {
       Boolean isCol = false;
       int R = matrix.length;
@@ -20,11 +20,20 @@ class Solution73 {
   
       // Iterate over the array once again and using the first row and first column, update the elements.
       for (int i = 1; i < R; i++) {
-        for (int j = 1; j < C; j++) {
-          if (matrix[i][0] == 0 || matrix[0][j] == 0) {
-            matrix[i][j] = 0;
+          if (matrix[i][0] == 0) {
+              for (int j = 1; j < C; j++) {
+                  matrix[i][j] = 0;
+              }
           }
-        }
+          
+      }
+        
+      for (int j = 1; j < C; j++) {
+          if (matrix[0][j] == 0) {
+              for (int i = 1; i < R; i++) {
+                  matrix[i][j] = 0;
+              }
+          }
       }
   
       // See if the first row needs to be set to zero as well
