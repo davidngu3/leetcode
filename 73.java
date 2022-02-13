@@ -18,7 +18,7 @@ class Solution {
         }
       }
   
-      // Iterate over the array once again and using the first row and first column, update the elements. c
+      // Iterate over the array once again and using the first row and first column, update the elements. cc
       for (int i = 1; i < R; i++) {
           if (matrix[i][0] == 0) {
               for (int j = 1; j < C; j++) {
