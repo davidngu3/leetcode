@@ -14,7 +14,7 @@ class Solution206 {
         
         // fast pointer goes 2x as fast as slow pointer
         // if fast and slow meet, there's a cycle
-        // if either is null, no cycle
+        // if either is null, no cycle possible
         
         ListNode fast = head;
         
