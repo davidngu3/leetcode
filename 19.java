@@ -1,5 +1,3 @@
-import java.util.*;
-
 /*
     Strategy: send a fast pointer n-1 nodes ahead
     Delete the nth last node using the slow pointer position

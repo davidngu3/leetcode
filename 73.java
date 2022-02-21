@@ -1,4 +1,4 @@
-class Solution {
+class Solution73 {
     public void setZeroes(int[][] matrix) {
       Boolean isCol = false;
       int R = matrix.length;
